@@ -11,6 +11,11 @@ cask "vibe-machine" do
 
   app "vibe-machine.app"
 
+  postflight do
+    system_command "/usr/bin/xattr",
+                   args: ["-cr", "#{appdir}/vibe-machine.app"]
+  end
+
   zap trash: [
     "~/Library/Application Support/io.mistystep.vibe-machine",
     "~/Library/Preferences/io.mistystep.vibe-machine.plist",

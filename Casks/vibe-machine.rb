@@ -9,7 +9,7 @@ cask "vibe-machine" do
 
   depends_on macos: ">= :big_sur"
 
-  app "Vibe Machine.app"
+  app "vibe-machine.app"
 
   zap trash: [
     "~/Library/Application Support/io.mistystep.vibe-machine",

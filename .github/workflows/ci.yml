@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  merge-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate shell and Ruby syntax
+        run: |
+          shellcheck scripts/sync-vibe-machine-cask.sh
+          ruby -c Casks/vibe-machine.rb
+
+      - name: Verify the cask matches the latest release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ./scripts/sync-vibe-machine-cask.sh
+          git diff --exit-code -- Casks/vibe-machine.rb
+
+      - name: Verify the public download and checksum
+        run: |
+          version=$(awk -F '"' '/^  version / { print $2 }' Casks/vibe-machine.rb)
+          expected=$(awk -F '"' '/^  sha256 / { print $2 }' Casks/vibe-machine.rb)
+          url="https://github.com/misty-step/vibe-machine/releases/download/v${version}/Vibe.Machine_${version}_aarch64.dmg"
+          curl --fail --location --retry 3 --output /tmp/vibe-machine.dmg "$url"
+          actual=$(sha256sum /tmp/vibe-machine.dmg | awk '{ print $1 }')
+          test "$actual" = "$expected"

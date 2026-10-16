@@ -7,7 +7,7 @@ cask "vibe-machine" do
   desc "Create cinematic audio visualizations"
   homepage "https://github.com/misty-step/vibe-machine"
 
-  depends_on macos: :big_sur
+  depends_on macos: :monterey
 
   app "Vibe Machine.app"
 

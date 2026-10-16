@@ -1,6 +1,6 @@
 cask "vibe-machine" do
-  version "1.4.0"
-  sha256 "2d77e7e4d9605ea917ced1a9981701e565e4ca39befcab6293c50a697ca2c657"
+  version "1.6.0"
+  sha256 "6366d333605833a31a5ee2798589f22e9c34dca8d40bbec6dee4482dbfde4fc2"
 
   url "https://github.com/misty-step/vibe-machine/releases/download/v#{version}/Vibe.Machine_#{version}_aarch64.dmg"
   name "Vibe Machine"

@@ -12,9 +12,11 @@ permissions:
 
 jobs:
   merge-gate:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, hetzner-ci, homebrew-tap-ci]
     steps:
       - uses: actions/checkout@v4
+      - name: Install validation and release tools
+        run: sudo apt-get update && sudo apt-get install -y shellcheck ruby gh
 
       - name: Validate shell and Ruby syntax
         run: |

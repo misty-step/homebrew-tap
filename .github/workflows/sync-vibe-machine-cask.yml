@@ -16,9 +16,11 @@ concurrency:
 
 jobs:
   sync:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, hetzner-ci, homebrew-tap-ci]
     steps:
       - uses: actions/checkout@v4
+      - name: Install cask and release tools
+        run: sudo apt-get update && sudo apt-get install -y ruby gh
 
       - name: Synchronize from the latest GitHub release
         env:
